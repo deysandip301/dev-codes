@@ -7,10 +7,10 @@ function Cart() {
     return (
         <div>
             <ul>
-            {
-                Object.values(cart).map((item) => {
-                    return (<li key={item.id}>{item.title}</li>)
-                })
+                {
+                    Object.values(cart).map((item) => {
+                        return (<li key={item.id}>{item.title} - Quantity: {item.quantity}</li>)
+                    })
                 }
             </ul>
         </div>
