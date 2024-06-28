@@ -1,6 +1,7 @@
 import { omit } from "lodash";
 const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+const SET_ACTIVE_CATEGORY = "SET_ACTIVE_CATEGORY";
 export function addToCart(product) {
   return {
     type: ADD_TO_CART,
@@ -13,6 +14,23 @@ export function removeFromCart(product) {
     type: REMOVE_FROM_CART,
     payload: product
   };
+}
+
+export function setActiveCategory(category) {
+  return (dispatch, getState) => {
+    const currentActiveCategory = getState().cart.activeCategory;
+    if (currentActiveCategory === category) {
+      dispatch({
+        type: SET_ACTIVE_CATEGORY,
+        payload: null
+      });
+    } else {
+      dispatch({
+        type: SET_ACTIVE_CATEGORY,
+        payload: category
+      });
+    }
+  }
 }
 
 function cartReducer(state= { items: {}}, action) {
@@ -63,6 +81,12 @@ function cartReducer(state= { items: {}}, action) {
         }
       }
 
+    }
+    case SET_ACTIVE_CATEGORY: {
+      return {
+        ...state,
+        activeCategory: action.payload
+      }
     }
     default:
       return state;
